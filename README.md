@@ -9,16 +9,18 @@ JText sends SMTP messages to the target devices' carrier's SMS gateway. The gate
 For JText to work, you must give the application the credentials and DNS/IP addresses for your preferred SMTP server and POP3 server. It uses the SMTP server for sending messages, and your POP3 server for receiving responses from cellular devices. JText caches all sent SMTP messages and received POP3 messages into a local file, and deletes them on the remote server, allowing for faster connections and clutterless inboxes. 
 
 #How do I run it?
-You can download it in the [Downloads](downloads-anchor) section. Once downloaded, run <code>java -jar sms.jar</code> within your preferred terminal in the directory that the downloaded jar file is in.
+You can download it in the [Downloads](#downloads-anchor) section. Once downloaded, run <code>java -jar sms.jar</code> within your preferred terminal in the directory that the downloaded jar file is in.
 
 Within the application shell, run the following commands to begin:
     <code>login</code> to login to your SMTP/POP3 servers. For reference:
         Gmail SMTP server: <code>smtp.gmail.com:587</code>
         Gmail POP3 server: <code>pop.gmail.com:995</code>
-    Start texting away! Type <code>help</code> for a list of commands. See [Documentation](documentation-anchor) for more info.
+    Start texting away! Type <code>help</code> for a list of commands. See [Documentation](#documentation-anchor) for more info.
 
-[downloads-anchor]#Downloads
+[downloads-anchor]
+#Downloads
 V1.0 Stable Download: https://github.com/TitaniumSapphire/Console-SMS-Client/raw/master/build/sms.jar
 
-[documentation-anchor]#Documentation
+[documentation-anchor]
+#Documentation
 All documentation can be found within the app. Type "help" in the shell to get a list of commands. Type "man <command>" to get detailed documentation for a specific command.
