@@ -17,10 +17,8 @@ Within the application shell, run the following commands to begin:
         Gmail POP3 server: <code>pop.gmail.com:995</code>
     Start texting away! Type <code>help</code> for a list of commands. See [Documentation](#documentation-anchor) for more info.
 
-[downloads-anchor]
-#Downloads
+[downloads-anchor]: #Downloads
 V1.0 Stable Download: https://github.com/TitaniumSapphire/Console-SMS-Client/raw/master/build/sms.jar
 
-[documentation-anchor]
-#Documentation
+[documentation-anchor]: #Documentation
 All documentation can be found within the app. Type "help" in the shell to get a list of commands. Type "man <command>" to get detailed documentation for a specific command.
