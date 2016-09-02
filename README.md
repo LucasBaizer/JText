@@ -13,10 +13,10 @@ You can download it in the [Downloads](#downloads) section. Once downloaded, run
 
 Within the application shell, run the following commands to begin:
     <code>login</code> to login to your SMTP/POP3 servers. For reference:
-    
+
         Gmail SMTP server: <code>smtp.gmail.com:587</code>
         Gmail POP3 server: <code>pop.gmail.com:995</code>
-        
+
     Start texting away! Type <code>help</code> for a list of commands. See [Documentation](#documentation) for more info.
 
 # Downloads
