@@ -1,4 +1,5 @@
 #JText
+A Java-based SMTP/SMS gateway client.
 
 ##What is it?
 It's a cross-platform Java-based application which runs within a terminal, such as Command Prompt on Windows or Bash on Mac OS X. JText allows you to be able to send texts to any cellular device from your own computer.
