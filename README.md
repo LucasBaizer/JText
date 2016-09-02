@@ -14,8 +14,7 @@ You can download it in the [Downloads](#downloads) section. Once downloaded, run
 Within the application shell, run the following commands to begin:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>login</code> to login to your SMTP/POP3 servers. For reference:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gmail SMTP server: <code>smtp.gmail.com:587</code>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gmail SMTP server: <code>smtp.gmail.com:587</code><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gmail POP3 server: <code>pop.gmail.com:995</code>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start texting away! Type <code>help</code> for a list of commands. See [Documentation](#documentation) for more info.
