@@ -5,7 +5,7 @@ import java.util.List;
 import com.sms.CarrierHelper;
 import com.sms.Console;
 import com.sms.Contact;
-import com.sms.ContactHelper;
+import com.sms.ContactHandler;
 import com.sms.Main;
 import com.sms.SMTPHandler;
 import com.sms.SaveData;
@@ -47,7 +47,7 @@ public class SMSOpenCommand extends ExecutableCommand {
 				return;
 			}
 		} else if (args.getArguments().length == 2) {
-			Contact c = ContactHelper.getContact(args.getArguments()[1]);
+			Contact c = ContactHandler.getContact(args.getArguments()[1]);
 			if (c != null) {
 				targetPhone = c.getPhoneNumber() + "@" + c.getCarrier().getAddress();
 				contact = c.getContactName();

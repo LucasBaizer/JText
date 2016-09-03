@@ -21,6 +21,16 @@ public class TextCacheHandler implements CacheHandler<TextCache[]> {
 		textCaches = new ArrayList<TextCache>(Arrays.asList(instance.deserializeSave(CACHE_FILE)));
 	}
 
+	public static TextCache[] getTextCaches(Filter<TextCache> filter) {
+		ArrayList<TextCache> passing = new ArrayList<>();
+		for (TextCache cache : textCaches) {
+			if (filter.filter(cache)) {
+				passing.add(cache);
+			}
+		}
+		return passing.toArray(new TextCache[passing.size()]);
+	}
+
 	public static TextCache getTextCache(String cacheID) {
 		for (TextCache cache : textCaches) {
 			if (cache.getCacheID().equals(cacheID)) {

@@ -2,7 +2,7 @@ package com.sms.command;
 
 import com.sms.CarrierHelper;
 import com.sms.Contact;
-import com.sms.ContactHelper;
+import com.sms.ContactHandler;
 import com.sms.command.help.ArgumentHelp;
 import com.sms.command.help.CommandHelp;
 
@@ -28,29 +28,29 @@ public class ContactCommand extends ExecutableCommand {
 				System.out.println("Unknown carrier alias: \"" + args.getArguments()[4] + "\".");
 				return;
 			}
-			if (ContactHelper.getContact(args.getArguments()[2]) != null) {
+			if (ContactHandler.getContact(args.getArguments()[2]) != null) {
 				System.out.println("A contact with the name \"" + args.getArguments()[2] + "\" already exists.");
 				return;
 			}
 
-			ContactHelper.addContact(new Contact(args.getArguments()[2], args.getArguments()[3],
+			ContactHandler.addContact(new Contact(args.getArguments()[2], args.getArguments()[3],
 					CarrierHelper.getAnyCarrier(args.getArguments()[4])));
 			System.out.println("Added contact.");
 		} else if (args.getArguments()[1].equals("remove")) {
-			if (!ContactHelper.removeContact(ContactHelper.getContact(args.getArguments()[2]))) {
+			if (!ContactHandler.removeContact(ContactHandler.getContact(args.getArguments()[2]))) {
 				System.out.println("No contact found with name \"" + args.getArguments()[2] + "\".");
 			} else {
 				System.out.println("Removed contact.");
 			}
 		} else if (args.getArguments()[1].equals("list")) {
 			System.out.println("Contacts:");
-			if (ContactHelper.getContacts() != null && ContactHelper.getContacts().length > 0) {
-				int cname = getLongest(ContactHelper.getContacts(), 0);
-				int cnumber = getLongest(ContactHelper.getContacts(), 1);
+			if (ContactHandler.getContacts() != null && ContactHandler.getContacts().length > 0) {
+				int cname = getLongest(ContactHandler.getContacts(), 0);
+				int cnumber = getLongest(ContactHandler.getContacts(), 1);
 				System.out
 						.println("\tName" + repeatSpace(cname) + "Number" + repeatSpace(cnumber - 2) + "Carrier Alias");
 				System.out.println();
-				for (Contact c : ContactHelper.getContacts()) {
+				for (Contact c : ContactHandler.getContacts()) {
 					System.out.println("\t" + c.getContactName() + repeatSpace(cname - c.getContactName().length() + 4)
 							+ c.getPhoneNumber() + repeatSpace(cnumber - c.getPhoneNumber().length() + 4)
 							+ c.getCarrier().getAlias());

@@ -16,7 +16,7 @@ public class Main {
 			SaveData.SaveDataCacheHandler.getSaveDataCacheHandler().initialize();
 			TextCacheHandler.initialize();
 			CarrierHelper.initializeCustomCarriers();
-			ContactHelper.initializeContacts();
+			ContactHandler.initializeContacts();
 
 			startExecution();
 		} catch (Exception e) {

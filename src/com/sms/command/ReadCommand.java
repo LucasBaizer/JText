@@ -9,7 +9,8 @@ import javax.mail.MessagingException;
 import com.sms.Carrier;
 import com.sms.CarrierHelper;
 import com.sms.Contact;
-import com.sms.ContactHelper;
+import com.sms.ContactHandler;
+import com.sms.Filter;
 import com.sms.SMTPHandler;
 import com.sms.SaveData;
 import com.sms.Text;
@@ -59,12 +60,24 @@ public class ReadCommand extends ExecutableCommand {
 				}
 			} else {
 				if (args.getArguments()[1].equals("*")) {
-					for (Contact contact : ContactHelper.getContacts()) {
+					for (Contact contact : ContactHandler.getContacts()) {
 						read(contact.getContactName(), contact.getPhoneNumber(), contact.getCarrier(), finalAmount);
 						System.out.println();
 					}
+					for (TextCache cache : TextCacheHandler.getTextCaches(new Filter<TextCache>() {
+						@Override
+						public boolean filter(TextCache obj) {
+							return ContactHandler.getContactByNumber(obj.getCacheID()) == null;
+						}
+					})) {
+						System.out.println("Messages with " + cache.getCacheID() + ":");
+						for (Text txt : cache.getTexts()) {
+							System.out.println("\t" + txt.getSenderName() + ": " + txt.getText());
+						}
+						System.out.println();
+					}
 				} else {
-					Contact contact = ContactHelper.getContact(args.getArguments()[1]);
+					Contact contact = ContactHandler.getContact(args.getArguments()[1]);
 					if (contact != null) {
 						read(contact.getContactName(), contact.getPhoneNumber(), contact.getCarrier(), amount);
 					} else {
