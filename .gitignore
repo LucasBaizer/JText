@@ -14,3 +14,9 @@ hs_err_pid*
 *.cache
 
 # Other app-specific stuff
+
+bin
+bin1
+
+.classpath
+.project
