@@ -21,7 +21,8 @@ import com.sms.pop3.POP3Handler;
 public class ReadCommand extends ExecutableCommand {
 	@Override
 	public boolean isValid(CommandData args) {
-		return args.getArguments().length == 3 || args.getArguments().length == 4;
+		return (args.getArguments().length == 2 && args.getArguments()[1].equals("*"))
+				|| args.getArguments().length == 3 || args.getArguments().length == 4;
 	}
 
 	@Override
@@ -38,12 +39,15 @@ public class ReadCommand extends ExecutableCommand {
 		}
 
 		int amount = 0;
-		try {
-			amount = Integer.parseInt(args.getArguments()[2]);
-		} catch (NumberFormatException e) {
-			System.out.println("Invalid amount of texts to read.");
-			return;
+		if (!args.getArguments()[1].equals("*")) {
+			try {
+				amount = Integer.parseInt(args.getArguments()[2]);
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid amount of texts to read.");
+				return;
+			}
 		}
+		int finalAmount = amount;
 		try {
 			if (args.getArguments().length == 4) {
 				Carrier carrier = CarrierHelper.getAnyCarrier(args.getArguments()[3]);
@@ -54,12 +58,19 @@ public class ReadCommand extends ExecutableCommand {
 					return;
 				}
 			} else {
-				Contact contact = ContactHelper.getContact(args.getArguments()[1]);
-				if (contact != null) {
-					read(contact.getContactName(), contact.getPhoneNumber(), contact.getCarrier(), amount);
+				if (args.getArguments()[1].equals("*")) {
+					for (Contact contact : ContactHelper.getContacts()) {
+						read(contact.getContactName(), contact.getPhoneNumber(), contact.getCarrier(), finalAmount);
+						System.out.println();
+					}
 				} else {
-					System.out.println("No contact found with name \"" + args.getArguments()[1] + "\".");
-					return;
+					Contact contact = ContactHelper.getContact(args.getArguments()[1]);
+					if (contact != null) {
+						read(contact.getContactName(), contact.getPhoneNumber(), contact.getCarrier(), amount);
+					} else {
+						System.out.println("No contact found with name \"" + args.getArguments()[1] + "\".");
+						return;
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -70,28 +81,30 @@ public class ReadCommand extends ExecutableCommand {
 	private void read(String name, String number, Carrier carrier, int amount) throws MessagingException, IOException {
 		String readingFrom = number + "@" + carrier.getAddress();
 
+		System.out.println("Messages with " + name + ": ");
 		TextCache cache = TextCacheHandler.getTextCache(readingFrom);
 		if (cache != null) {
 			for (Text txt : cache.getTexts()) {
-				System.out.println(
-						(txt.getSenderName().equals("You") ? "You" : name) + ": " + txt.getText().replaceAll("\n", ""));
+				System.out.println("\t" + (txt.getSenderName().equals("You") ? "You" : name) + ": "
+						+ txt.getText().replaceAll("\n", ""));
 			}
 		} else {
-			System.out.println("No stored messages.");
+			System.out.println("\tNo stored messages.");
 		}
 
-		System.out.println();
-
 		List<String> messages = POP3Handler.getClient().getMessages(readingFrom, amount);
-		Collections.reverse(messages);
+		if (messages != null) {
+			Collections.reverse(messages);
 
-		if (messages.size() > 0) {
-			for (String msg : messages) {
-				System.out.println(msg.replaceAll("\n", ""));
-				TextCacheHandler.cacheText(msg, readingFrom, readingFrom);
+			if (messages.size() > 0) {
+				System.out.println();
+				for (String msg : messages) {
+					System.out.println("\t" + msg.replaceAll("\n", ""));
+					TextCacheHandler.cacheText(msg, readingFrom, readingFrom);
+				}
+			} else {
+				System.out.println("\tNo new messages.");
 			}
-		} else {
-			System.out.println("No new messages.");
 		}
 	}
 
@@ -102,7 +115,7 @@ public class ReadCommand extends ExecutableCommand {
 		help.addArgumentData("target",
 				"The target device, either a phone number or a contact name (specified by the present flag).");
 		help.addArgumentData("amount",
-				"An integer specifying how many messages to read in reverse chronological order.");
+				"An integer specifying how many messages to read in reverse chronological order. Not required if target is a wildcard.");
 		help.addArgumentData("carrier",
 				"Specifies the target devices' carrier. Only required when using a phone number.");
 		return help;
