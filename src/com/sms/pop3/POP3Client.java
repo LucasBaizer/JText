@@ -3,6 +3,9 @@ package com.sms.pop3;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sms.ContactHandler;
+import com.sms.TextCacheHandler;
+
 import jodd.mail.EmailFilter;
 import jodd.mail.EmailMessage;
 import jodd.mail.Pop3SslServer;
@@ -49,6 +52,34 @@ public class POP3Client {
 				List<EmailMessage> messages = email.getAllMessages();
 				for (EmailMessage msg : messages) {
 					msgs.add(msg.getContent());
+				}
+			}
+		}
+
+		return msgs;
+	}
+
+	public List<String> getMessagesFromUnknownSources() {
+		ArrayList<String> msgs = new ArrayList<>();
+
+		connect();
+
+		try {
+			session.useDefaultFolder();
+		} catch (IllegalStateException e) {
+			System.err.println("Error retrieving messages. Please try again later.");
+			return null;
+		}
+
+		ReceivedEmail[] emails = session.receiveEmailAndDelete();
+		if (emails != null) {
+			for (ReceivedEmail email : emails) {
+				if (ContactHandler.getContactByNumber(email.getFrom().getEmail()) == null
+						&& TextCacheHandler.getTextCache(email.getFrom().getEmail()) == null) {
+					List<EmailMessage> messages = email.getAllMessages();
+					for (EmailMessage msg : messages) {
+						msgs.add(email.getFrom().getEmail() + ": " + msg.getContent());
+					}
 				}
 			}
 		}

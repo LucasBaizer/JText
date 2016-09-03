@@ -76,6 +76,14 @@ public class ReadCommand extends ExecutableCommand {
 						}
 						System.out.println();
 					}
+					System.out.println("New messages:");
+					List<String> sources;
+					for (String newText : sources = POP3Handler.getClient().getMessagesFromUnknownSources()) {
+						System.out.println("\t" + newText);
+					}
+					if (sources.size() == 0) {
+						System.out.println("\tNo messages from unknown devices.");
+					}
 				} else {
 					Contact contact = ContactHandler.getContact(args.getArguments()[1]);
 					if (contact != null) {
