@@ -34,7 +34,12 @@ public class POP3Client {
 
 		connect();
 
-		session.useDefaultFolder();
+		try {
+			session.useDefaultFolder();
+		} catch (IllegalStateException e) {
+			System.err.println("Error retrieving messages. Please try again later.");
+			return null;
+		}
 
 		ReceivedEmail[] emails = session.receiveEmailAndDelete(new EmailFilter().from(from));
 		if (emails != null) {

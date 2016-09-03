@@ -48,7 +48,7 @@ public class ReadCommand extends ExecutableCommand {
 			if (args.getArguments().length == 4) {
 				Carrier carrier = CarrierHelper.getAnyCarrier(args.getArguments()[3]);
 				if (carrier != null) {
-					read(args.getArguments()[1], carrier, amount);
+					read(args.getArguments()[1], args.getArguments()[1], carrier, amount);
 				} else {
 					System.out.println("Unknown carrier alias: \"" + args.getArguments()[2] + "\".");
 					return;
@@ -56,7 +56,7 @@ public class ReadCommand extends ExecutableCommand {
 			} else {
 				Contact contact = ContactHelper.getContact(args.getArguments()[1]);
 				if (contact != null) {
-					read(contact.getPhoneNumber(), contact.getCarrier(), amount);
+					read(contact.getContactName(), contact.getPhoneNumber(), contact.getCarrier(), amount);
 				} else {
 					System.out.println("No contact found with name \"" + args.getArguments()[1] + "\".");
 					return;
@@ -67,17 +67,14 @@ public class ReadCommand extends ExecutableCommand {
 		}
 	}
 
-	private void read(String number, Carrier carrier, int amount) throws MessagingException, IOException {
+	private void read(String name, String number, Carrier carrier, int amount) throws MessagingException, IOException {
 		String readingFrom = number + "@" + carrier.getAddress();
 
 		TextCache cache = TextCacheHandler.getTextCache(readingFrom);
 		if (cache != null) {
 			for (Text txt : cache.getTexts()) {
-				System.out.println((!txt.getSenderName().equals("You")
-						? (ContactHelper.getContactByNumber(txt.getSenderName()) != null
-								? ContactHelper.getContactByNumber(txt.getSenderName()).getContactName()
-								: txt.getSenderName())
-						: "You") + ": " + txt.getText().replaceAll("\n", ""));
+				System.out.println(
+						(txt.getSenderName().equals("You") ? "You" : name) + ": " + txt.getText().replaceAll("\n", ""));
 			}
 		} else {
 			System.out.println("No stored messages.");
