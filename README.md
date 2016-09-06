@@ -22,7 +22,7 @@ Within the application shell, run the following commands to begin:<br/>
 V1.0 Stable Download: https://github.com/TitaniumSapphire/Console-SMS-Client/raw/master/build/sms.jar
 
 ## Documentation
-All documentation can be found within the app. Type "help" in the shell to get a list of commands. Type <code>man \<command\></code> to get detailed documentation for a specific command.
+All documentation can be found within the app. Type <code>help</code> in the shell to get a list of commands. Type <code>man \<command\></code> to get detailed documentation for a specific command.
 
 ##Licence
 Licenced under the [GNU General Public Licence 3.0](LICENCE.md).<br/>
