@@ -1,6 +1,7 @@
 package com.sms.command;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,14 +61,16 @@ public class ReadCommand extends ExecutableCommand {
 				}
 			} else {
 				if (args.getArguments()[1].equals("*")) {
+					ArrayList<String> numbers = new ArrayList<>();
 					for (Contact contact : ContactHandler.getContacts()) {
 						read(contact.getContactName(), contact.getPhoneNumber(), contact.getCarrier(), finalAmount);
+						numbers.add(contact.getPhoneNumber() + "@" + contact.getCarrier().getAddress());
 						System.out.println();
 					}
 					for (TextCache cache : TextCacheHandler.getTextCaches(new Filter<TextCache>() {
 						@Override
 						public boolean filter(TextCache obj) {
-							return ContactHandler.getContactByNumber(obj.getCacheID()) == null;
+							return !numbers.contains(obj.getCacheID());
 						}
 					})) {
 						System.out.println("Messages with " + cache.getCacheID() + ":");
@@ -121,7 +124,7 @@ public class ReadCommand extends ExecutableCommand {
 				System.out.println();
 				for (String msg : messages) {
 					System.out.println("\t" + msg.replaceAll("\n", ""));
-					TextCacheHandler.cacheText(msg, readingFrom, readingFrom);
+					TextCacheHandler.cacheText(msg, readingFrom, name);
 				}
 			} else {
 				System.out.println("\tNo new messages.");

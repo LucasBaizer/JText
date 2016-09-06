@@ -1,8 +1,8 @@
 package com.sms;
 
-public class DefaultFilter implements Filter<Object> {
+public class DefaultFilter<T> implements Filter<T> {
 	@Override
-	public boolean filter(Object obj) {
+	public boolean filter(T obj) {
 		return true;
 	}
 }
