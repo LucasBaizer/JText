@@ -11,6 +11,7 @@ public class CarrierHelper {
 	static {
 		addCarrier("AT&T", "att", "txt.att.net");
 		addCarrier("Comcast", "comcast", "comcastpcs.textmsg.com");
+		addCarrier("Google", "google", "msg.fi.google.com");
 		addCarrier("Metro PCS", "metro", "mymetropcs.com");
 		addCarrier("Sprint", "sprint", "messaging.sprintpcs.com");
 		addCarrier("T-Mobile", "tmobile", "tmomail.net");
