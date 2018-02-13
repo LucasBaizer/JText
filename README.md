@@ -25,5 +25,4 @@ V1.0 Stable Download: https://github.com/TitaniumSapphire/Console-SMS-Client/raw
 All documentation can be found within the app. Type <code>help</code> in the shell to get a list of commands. Type <code>man \<command\></code> to get detailed documentation for a specific command.
 
 ## Licence
-Licenced under the [MIT License](LICENCE.md).<br/>
-<b>Copyright © 2016-2018 Lucas Baizer</b>
+Licenced under the [MIT License](LICENSE.md).
